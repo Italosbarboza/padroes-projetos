@@ -1,0 +1,91 @@
+Documentação do Padrão Singleton
+
+## Visão Geral
+O **Padrão Singleton** é um padrão de design criacional que garante que uma classe tenha apenas uma instância e fornece um ponto global de acesso a essa instância. É comumente usado quando exatamente um objeto é necessário para coordenar ações em todo o sistema.
+
+## Implementação
+
+### Classe Singleton
+Para implementar o **Padrão Singleton**, uma classe deve seguir estas diretrizes:
+
+**Construtor Privado:** A classe deve ter um construtor privado para evitar a instanciação externa da classe.
+
+**Instância Privada Estática:** A classe deve conter uma instância privada estática de si mesma.
+
+**Método Estático Público:** Deve ser fornecido um método estático público para acessar a instância do singleton. Este método é responsável por criar a instância se ela não existir, caso contrário, retorna a instância existente.
+
+### Exemplo em TypeScript:
+
+```typescript
+class Singleton {
+    private static _instance: Singleton | null = null;
+
+    private constructor() {
+        // Construtor privado para evitar instanciação externa
+    }
+
+    public static getInstance(): Singleton {
+        if (!Singleton._instance) {
+            Singleton._instance = new Singleton();
+            // Lógica de inicialização adicional pode ser adicionada aqui
+        }
+        return Singleton._instance;
+    }
+}
+
+// Uso:
+const mySingleton: Singleton = Singleton.getInstance();
+
+```
+
+### Benefícios
+**Acesso Global**: O Padrão Singleton fornece um único ponto de acesso à instância, facilitando o acesso de qualquer parte do código.
+
+**Inicialização Preguiçosa**: A instância é criada apenas quando é solicitada pela primeira vez, o que é eficiente e evita a alocação desnecessária de recursos.
+
+**Segurança de Threads**: Singleton adequadamente implementados são seguros para threads, garantindo que apenas uma instância seja criada mesmo em um ambiente multithread.
+
+### Casos de Uso
+Use o Padrão Singleton quando:
+
+**1.**Você precisa exatamente de uma instância de uma classe para coordenar ações **2.**dentro de um sistema.
+A única instância deve ser extensível sem modificar o código.
+
+Exemplo
+```typescript
+// Classe Singleton representando um gerenciador de configuração
+class ConfigurationManager {
+    private static _instance: ConfigurationManager | null = null;
+    private _configData: Record<string, string> = {};
+
+    private constructor() {
+        // Construtor privado para evitar instanciação externa
+    }
+
+    public static getInstance(): ConfigurationManager {
+        if (!ConfigurationManager._instance) {
+            ConfigurationManager._instance = new ConfigurationManager();
+            // Lógica de inicialização adicional pode ser adicionada aqui
+        }
+        return ConfigurationManager._instance;
+    }
+
+    public getConfig(key: string): string | undefined {
+        return this._configData[key];
+    }
+
+    public setConfig(key: string, value: string): void {
+        this._configData[key] = value;
+    }
+}
+
+// Uso:
+const configManager: ConfigurationManager = ConfigurationManager.getInstance();
+configManager.setConfig('server_url', 'http://example.com');
+console.log(configManager.getConfig('server_url'));  // Saída: http://example.com
+
+```
+
+
+
+
