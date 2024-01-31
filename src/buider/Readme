@@ -1,0 +1,105 @@
+
+Padrão de Projeto Builder
+
+Introdução
+O padrão de projeto Builder é um padrão criacional que separa a construção de um objeto complexo de sua representação, permitindo a mesma construção para criar diferentes representações. Esse padrão é particularmente útil quando um objeto pode ter várias formas ou configurações, e a construção de cada forma é um processo complexo.
+
+Objetivo
+O objetivo do padrão Builder é criar uma solução mais flexível para a construção de objetos complexos, permitindo que o mesmo processo de construção seja utilizado para criar diferentes representações do objeto.
+
+Componentes Principais
+Builder (Construtor):
+
+Define uma interface para a criação de partes do produto.
+
+ConcreteBuilder (Construtor Concreto):
+
+Implementa a interface Builder para construir e montar as partes específicas do produto.
+Director (Diretor):
+
+Coordena o processo de construção utilizando um objeto Builder.
+
+Product (Produto):
+
+Representa o objeto complexo sendo construído. O Builder constrói as partes do produto e o diretor coordena o processo para montar o produto final.
+
+Implementação
+
+Interface Builder:
+
+java
+public interface Builder {
+    void buildPart1();
+    void buildPart2();
+    Product getResult();
+}
+Construtor Concreto:
+
+java
+public class ConcreteBuilder implements Builder {
+    private Product product = new Product();
+
+    public void buildPart1() {
+        // Lógica de construção da parte 1
+    }
+
+    public void buildPart2() {
+        // Lógica de construção da parte 2
+    }
+
+    public Product getResult() {
+        return product;
+    }
+}
+Diretor:
+
+java
+public class Director {
+    private Builder builder;
+
+    public Director(Builder builder) {
+        this.builder = builder;
+    }
+
+    public void construct() {
+        builder.buildPart1();
+        builder.buildPart2();
+    }
+}
+Produto:
+
+java
+Copy code
+public class Product {
+    // Representa o objeto complexo sendo construído
+}
+Uso
+Exemplo de Uso:
+java
+Copy code
+// Criando um construtor concreto
+Builder builder = new ConcreteBuilder();
+
+// Criando um diretor e associando o construtor
+Director director = new Director(builder);
+
+// Construindo o produto
+director.construct();
+
+// Obtendo o produto final
+Product product = builder.getResult();
+Vantagens
+Flexibilidade:
+
+Permite a criação de diferentes representações do mesmo objeto.
+Encapsulamento:
+
+Isola o código de construção do código de representação, facilitando alterações futuras.
+Reutilização de Código:
+
+Permite a reutilização do mesmo código de construção para diferentes representações.
+Conclusão
+O padrão de projeto Builder é uma ferramenta poderosa para lidar com a criação de objetos complexos, proporcionando uma solução flexível e encapsulada. Ele promove a reutilização de código e facilita a manutenção, especialmente em situações em que a construção de objetos pode variar. Utilize-o sempre que houver a necessidade de criar diferentes representações de um objeto complexo sem comprometer a flexibilidade do código.
+
+Referências
+Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1994). Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley.
